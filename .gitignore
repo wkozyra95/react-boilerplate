@@ -1,0 +1,9 @@
+static
+release
+node_modules
+
+*.swp
+*.swo
+npm-debug.log
+
+yarn.lock

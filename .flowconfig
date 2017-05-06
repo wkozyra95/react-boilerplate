@@ -1,0 +1,28 @@
+[ignore]
+[include]
+../node_modules
+./src/api/index.js
+[libs]
+flow/decl/require.js
+../node_modules/react/dist/*
+[options]
+
+experimental.strict_type_args=true
+esproposal.export_star_as=enable
+
+munge_underscores=true
+
+module.name_mapper='.*\.scss$' -> '<PROJECT_ROOT>/flow/stub/css-modules.js'
+module.name_mapper='^\([^.].*\)$' -> '<PROJECT_ROOT>/src/\1'
+module.name_mapper='^\([^.].*\)$' -> '<PROJECT_ROOT>/lib/\1'
+
+suppress_type=$FlowIssue
+suppress_type=$FlowFixMe
+suppress_type=$FixMe
+suppress_type=$FlowExpectedError
+
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(>=0\\.\\(3[0-3]\\|[1-2][0-9]\\|[0-9]\\).[0-9]\\)? *\\(site=[a-z,_]*www[a-z,_]*\\)?)\\)
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(>=0\\.\\(3[0-3]\\|[1-2][0-9]\\|[0-9]\\).[0-9]\\)? *\\(site=[a-z,_]*www[a-z,_]*\\)?)\\)?:? #[0-9]+
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
+suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
+unsafe.enable_getters_and_setters=true
