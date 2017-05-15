@@ -17,7 +17,7 @@ const __DEV__ = env === 'development';
 const __TEST__ = env === 'test';
 
 const ENTRY_PATH = __dirname + '/../src/main.js';
-const DEPLOY_PATH = __dirname + '/../static/';
+const DEPLOY_PATH = __dirname + '/../build/';
 
 const config = {
   entry: {
