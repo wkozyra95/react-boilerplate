@@ -25,8 +25,12 @@ export function* login(action: { user: LoginData }): Generator<*, *, *> {
     const token = response.data.token;
     yield* updateAuthToken(token);
 
+    if (response.data.user) {
+      yield put({ type: actionType.FETCH_ACCOUNT_SUCCESS, user: response.data.user });
+    }
+
     yield put({ type: actionType.LOGIN_RESPONSE_SUCCESS, token });
-    router.push('project/list');
+    router.push('account');
   } catch (error) {
     yield put({ type: actionType.LOGIN_RESPONSE_ERROR, error: error.response.data });
   }
@@ -42,6 +46,38 @@ export function* register(action: { user: RegisterData }): Generator<*, *, *> {
     } });
   } catch (error) {
     yield put({ type: actionType.REGISTER_RESPONSE_ERROR, error: error.response.data });
+  }
+}
+
+export function* fetchAccount(): Generator<*, *, *> {
+  try {
+    const response = yield call(api.get, endpoint.ACCOUNT);
+    yield put({ type: actionType.FETCH_ACCOUNT_SUCCESS, user: response.data });
+  } catch (error) {
+    yield put({ type: actionType.FETCH_ACCOUNT_ERROR, error: error.response.data || {} });
+  }
+}
+
+export function* updateAccount(action: { user: Object }): Generator<*, *, *> {
+  try {
+    const response = yield call(api.post, endpoint.ACCOUNT, action.user);
+    yield put({ type: actionType.UPDATE_ACCOUNT_SUCCESS, user: response.data });
+  } catch (error) {
+    yield put({ type: actionType.UPDATE_ACCOUNT_ERROR, error: error.response.data });
+  }
+}
+
+export function* changePassword(
+  action: { newPassword: string, oldPassword: string },
+): Generator<*, *, *> {
+  try {
+    yield call(api.post, endpoint.CHANGE_PASSWORD, {
+      newPassword: action.newPassword,
+      oldPassword: action.oldPassword,
+    });
+    yield put({ type: actionType.CHANGE_PASSWORD_SUCCESS });
+  } catch (error) {
+    yield put({ type: actionType.CHANGE_PASSWORD_ERROR, error: error.response.data });
   }
 }
 
@@ -61,6 +97,18 @@ export function* watchRegister(): Generator<*, *, *> {
 
 export function* watchLogout(): Generator<*, *, *> {
   yield call(takeLatest, actionType.LOGOUT, logout);
+}
+
+export function* watchFetchAccount(): Generator<*, *, *> {
+  yield call(takeLatest, actionType.FETCH_ACCOUNT, fetchAccount);
+}
+
+export function* watchUpdateAccount(): Generator<*, *, *> {
+  yield call(takeLatest, actionType.UPDATE_ACCOUNT, updateAccount);
+}
+
+export function* watchChangePassword(): Generator<*, *, *> {
+  yield call(takeLatest, actionType.CHANGE_PASSWORD, changePassword);
 }
 
 export function* watch403InterceptorChannel(): Generator<*, *, *> {
@@ -91,10 +139,14 @@ export function* watch403InterceptorChannel(): Generator<*, *, *> {
 }
 
 export default function* authSaga(): Generator<*, *, *> {
+  yield call(fetchAccount);
   yield [
     fork(watch403InterceptorChannel),
     fork(watchLogin),
     fork(watchRegister),
+    fork(watchFetchAccount),
+    fork(watchUpdateAccount),
+    fork(watchChangePassword),
     fork(watchLogout),
   ];
 }

@@ -14,7 +14,9 @@ class WelcomePage extends React.Component {
 
   render() {
     return (
-      <AppLayout />
+      <AppLayout>
+        WelcomePage
+      </AppLayout>
     );
   }
 }

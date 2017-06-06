@@ -38,7 +38,7 @@ const styles = {
     overflow: 'auto',
     minHeight: '300px',
     minWidth: '800px',
-    background: Style.Theme.palette.canvasColor,
+    background: '#F0F0F0',
   },
 };
 

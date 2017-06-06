@@ -13,7 +13,7 @@ git clone --depth=1 $REPO_URL $TMP_DIR -b $BRANCH && \
 rm -rvf $TMP_DIR/* && \
 
 rm -rf build && \
-npm run deploy && \
+APP_BASE_URL="https://phoenix-boilerplate.herokuapp.com" npm run deploy && \
 
 cp -rv build/* $TMP_DIR/ && \
 

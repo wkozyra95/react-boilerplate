@@ -15,7 +15,7 @@ const authRoutes = {
   childRoutes: [
     {
       path: 'login',
-      indexRoute: { onEnter: redirectIfLoggedIn('/project/list') },
+      indexRoute: { onEnter: redirectIfLoggedIn('account') },
       getComponent(nextState: string, cb: Function) {
         require.ensure([], (require) => {
           cb(null, require('./containers/LoginContainer').default);
@@ -23,7 +23,7 @@ const authRoutes = {
       },
     }, {
       path: 'register',
-      indexRoute: { onEnter: redirectIfLoggedIn('project/list') },
+      indexRoute: { onEnter: redirectIfLoggedIn('account') },
       getComponent(nextState: string, cb: Function) {
         require.ensure([], (require) => {
           cb(null, require('./containers/RegisterContainer').default);

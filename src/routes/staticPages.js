@@ -4,7 +4,7 @@ import { redirectIfLoggedIn } from 'utils/router';
 const staticPages = [
   {
     path: 'welcome',
-    indexRoute: { onEnter: redirectIfLoggedIn('project/list') },
+    indexRoute: { onEnter: redirectIfLoggedIn('account') },
     getComponent(nextState: Object, cb: Function) {
       require.ensure([], (require) => {
         cb(null, require('pages/WelcomePage').default);

@@ -23,8 +23,27 @@ const registerSelector = (state: Store) => {
   };
 };
 
+const accountSelector = (state: Store): Object => {
+  const auth = authSelector(state);
+
+  return {
+    user: auth.get('user', Map()).toJS(),
+    updateError: auth.get('updateAccountError', Map()).toJS(),
+  };
+};
+
+const changePasswordSelector = (state: Store): Object => {
+  const auth = authSelector(state);
+
+  return {
+    formError: auth.get('changePassError', Map()).toJS(),
+  };
+};
+
 export default {
   authSelector,
   loginSelector,
   registerSelector,
+  accountSelector,
+  changePasswordSelector,
 };

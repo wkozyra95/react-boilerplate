@@ -13,8 +13,8 @@ let authorizationToken = '';
 axiosInstance.interceptors.request.use(
   (request) => {
     if (authorizationToken) {
-      request.headers['X-Auth-Token'] = authorizationToken; // eslint-disable-line no-param-reassign
-      request.headers['Content-Type'] = 'application/json'; // eslint-disable-line no-param-reassign
+      request.headers['Authorization'] = `Bearer ${authorizationToken}`; // eslint-disable-line 
+      request.headers['Content-Type'] = 'application/json'; // eslint-disable-line
     }
     return request;
   },

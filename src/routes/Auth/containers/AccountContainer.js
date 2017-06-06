@@ -1,14 +1,25 @@
 /* @flow */
 
 import React from 'react';
-import AppLayout from 'pages/AppLayout';
+import AccountLayout from '../components/AccountLayout';
+import ProfileEditorContainer from './ProfileEditorContainer';
+import ChangePassEditorContainer from './ChangePassEditorContainer';
 
 class AccountContainer extends React.Component {
+  state: {
+    username: string,
+    email: string,
+  } = {
+    username: '',
+    email: '',
+  }
+
   render() {
     return (
-      <AppLayout>
-        Account
-      </AppLayout>
+      <AccountLayout>
+        <ProfileEditorContainer />
+        <ChangePassEditorContainer />
+      </AccountLayout>
     );
   }
 }
