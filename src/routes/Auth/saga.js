@@ -81,6 +81,23 @@ export function* changePassword(
   }
 }
 
+export function* googleLogin(action: { data: mixed }): Generator<*, *, *> {
+  try {
+    const response = yield call(api.post, endpoint.GOOGLE_LOGIN, action.data);
+    const token = response.data.token;
+    yield* updateAuthToken(token);
+
+    if (response.data.user) {
+      yield put({ type: actionType.FETCH_ACCOUNT_SUCCESS, user: response.data.user });
+    }
+
+    yield put({ type: actionType.GOOGLE_LOGIN_SUCCESS, token });
+    router.push('account');
+  } catch (error) {
+    yield put({ type: actionType.GOOGLE_LOGIN_ERROR, error: error.response.data });
+  }
+}
+
 export function* logout(): Generator<*, *, *> {
   yield call(api.saveAuthToken, '');
   yield call(cookie.delete, cookieKey.AUTH_TOKEN);
@@ -111,6 +128,10 @@ export function* watchChangePassword(): Generator<*, *, *> {
   yield call(takeLatest, actionType.CHANGE_PASSWORD, changePassword);
 }
 
+export function* watchGoogleLogin(): Generator<*, *, *> {
+  yield call(takeLatest, actionType.GOOGLE_LOGIN, googleLogin);
+}
+
 export function* watch403InterceptorChannel(): Generator<*, *, *> {
   const emitterWrapper = (emitter) => {
     api.registerInterceptor(
@@ -128,7 +149,7 @@ export function* watch403InterceptorChannel(): Generator<*, *, *> {
   };
   const channel = eventChannel(emitterWrapper);
 
-  while (true) {
+  for (;;) {
     try {
       yield take(channel);
       yield put({ type: actionType.LOGOUT });
@@ -147,6 +168,7 @@ export default function* authSaga(): Generator<*, *, *> {
     fork(watchFetchAccount),
     fork(watchUpdateAccount),
     fork(watchChangePassword),
+    fork(watchGoogleLogin),
     fork(watchLogout),
   ];
 }
