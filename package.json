@@ -22,6 +22,7 @@
     "react-cookie": "^1.0.4",
     "react-css-modules": "^4.1.0",
     "react-dom": "^15.4.1",
+    "react-google-login": "^2.8.9",
     "react-icons": "^2.2.3",
     "react-modal": "^1.7.3",
     "react-redux": "^5.0.2",

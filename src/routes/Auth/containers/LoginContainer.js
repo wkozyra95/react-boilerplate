@@ -10,6 +10,7 @@ import { Form, FormInput } from 'components/Form';
 import type { LoginData } from '../model';
 import selector from '../selector';
 import { actionCreator } from '../reducer';
+import GoogleAuthContainer from './GoogleAuthContainer';
 
 type Props = {
   includeLinks?: bool,
@@ -72,6 +73,7 @@ class LoginContainer extends React.Component {
           errorText={this.props.loginError.all || this.props.loginError.password}
           secureTextEntry
         />
+        <GoogleAuthContainer />
       </Form>
     );
   }

@@ -8,6 +8,7 @@ export type Endpoint = 'LOGIN' |
 const endpoints = {
   LOGIN: 'auth/login',
   REGISTER: 'auth/register',
+  GOOGLE_LOGIN: 'auth/google',
   ACCOUNT: 'user',
   CHANGE_PASSWORD: 'auth/change_password',
 };

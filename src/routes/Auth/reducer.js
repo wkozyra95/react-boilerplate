@@ -30,6 +30,10 @@ export const actionType = {
   CHANGE_PASSWORD_SUCCESS: 'CHANGE_PASSWORD_SUCCESS',
   CHANGE_PASSWORD_ERROR: 'CHANGE_PASSWORD_ERROR',
   CLEAR_CHANGE_PASSWORD_ERROR: 'CLEAR_CHANGE_PASSWORD_ERROR',
+
+  GOOGLE_LOGIN: 'GOOGLE_LOGIN',
+  GOOGLE_LOGIN_SUCCESS: 'GOOGLE_LOGIN_PENDING',
+  GOOGLE_LOGIN_ERROR: 'GOOGLE_LOGIN_ERROR',
 };
 
 const ACTION_HANDLERS = {
@@ -93,6 +97,16 @@ const ACTION_HANDLERS = {
   [actionType.CLEAR_CHANGE_PASSWORD_ERROR]: (state: AuthState, action: {field: string}) => {
     return state.deleteIn(['changePassError', action.field]);
   },
+  [actionType.GOOGLE_LOGIN]: (state: AuthState) => {
+    return state.merge({ isGoogleLoginPending: true });
+  },
+  [actionType.GOOGLE_LOGIN_SUCCESS]: (state: AuthState, action) => {
+    return state.merge({ token: action.token, isGoogleLoginPending: false });
+  },
+  [actionType.GOOGLE_LOGIN_ERROR]: (state: AuthState, action) => {
+    return state.merge({ googleLoginError: action.error, isGoogleLoginPending: false });
+  },
+
 };
 
 export const actionCreator = {
@@ -119,6 +133,9 @@ export const actionCreator = {
   },
   clearChangePasswordError: (field: string) => {
     return { type: actionType.CLEAR_CHANGE_PASSWORD_ERROR, field };
+  },
+  googleLogin: (data: mixed) => {
+    return { type: actionType.GOOGLE_LOGIN, data };
   },
 };
 
