@@ -9,6 +9,7 @@ import { Form, FormInput } from 'components/Form';
 import { actionCreator } from '../reducer';
 import selector from '../selector';
 import type { RegisterData } from '../model';
+import GoogleAuthContainer from './GoogleAuthContainer';
 
 type Props = {
   includeLinks?: bool,
@@ -57,6 +58,7 @@ class RegisterContainer extends React.Component {
         submit={this.register}
         submitText={t('auth.form.registerBtn')}
         links={links}
+        under={<GoogleAuthContainer />}
       >
         <FormInput
           value={this.state.email}

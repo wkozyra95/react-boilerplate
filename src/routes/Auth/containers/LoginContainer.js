@@ -57,6 +57,7 @@ class LoginContainer extends React.Component {
         submit={this.login}
         submitText={t('auth.form.loginBtn')}
         links={links}
+        under={<GoogleAuthContainer />}
       >
         <FormInput
           value={this.state.username}
@@ -73,7 +74,6 @@ class LoginContainer extends React.Component {
           errorText={this.props.loginError.all || this.props.loginError.password}
           secureTextEntry
         />
-        <GoogleAuthContainer />
       </Form>
     );
   }

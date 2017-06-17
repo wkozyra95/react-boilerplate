@@ -10,6 +10,7 @@ import FormLink from './FormLink';
 
 type Props = {
   children?: Array<Element<*>>,
+  under?: Element<*>,
   submit: () => void,
   submitText: string,
   links: Array<{
@@ -38,6 +39,7 @@ class Form extends React.Component {
           primary
           label={this.props.submitText}
         />
+        {this.props.under}
       </div>
     );
   }
