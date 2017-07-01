@@ -5,6 +5,7 @@ import * as authSaga from '../../src/routes/Auth/saga';
 import { actionType } from '../../src/routes/Auth/reducer';
 import api, { endpoint } from '../../src/api';
 import cookie, { key as cookieKey } from '../../src/store/cookie';
+import { BottomNotification } from '../../src/components/Modal';
 
 const testUser = {
   username: 'username',
@@ -48,6 +49,7 @@ describe('Auth saga tests', () => {
     expect(saga.throw(loginError).value).toEqual(
       put({ type: actionType.LOGIN_RESPONSE_ERROR, error: loginError.response.data }),
     );
+    expect(saga.next().value).toEqual(call(BottomNotification.showNotification, 'Unknown error.'));
     expect(saga.next().done).toBeTruthy();
   });
 
@@ -71,6 +73,7 @@ describe('Auth saga tests', () => {
     expect(saga.throw(registerError).value).toEqual(
       put({ type: actionType.REGISTER_RESPONSE_ERROR, error: registerError.response.data }),
     );
+    expect(saga.next().value).toEqual(call(BottomNotification.showNotification, 'Unknown error.'));
     expect(saga.next().done).toBeTruthy();
   });
 

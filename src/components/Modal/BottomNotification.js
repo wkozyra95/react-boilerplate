@@ -5,6 +5,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 class BottomNotification extends React.Component {
   static elementRef: ?BottomNotification = null;
+  static showNotification: Function;
   state: {
     open: bool,
     message: string,
@@ -36,6 +37,7 @@ class BottomNotification extends React.Component {
   }
 }
 
+BottomNotification.showNotification = showNotification;
 
 export function showNotification(message: string) {
   if (BottomNotification.elementRef) {
