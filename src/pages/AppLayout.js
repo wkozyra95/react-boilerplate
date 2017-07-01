@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Style from 'styles';
 import { actionType } from 'routes/Auth/reducer';
+import { BottomNotification } from 'components/Modal';
 import cls from '../styles/core.scss'; // eslint-disable-line no-unused-vars
 
 type Props = {
@@ -23,6 +24,7 @@ class AppLayout extends React.Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(Style.Theme)} >
         <div style={styles.layout}>
+          <BottomNotification />
           <Header {...props} />
           {children}
         </div>

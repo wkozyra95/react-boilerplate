@@ -5,6 +5,7 @@ import { fork, call, put, take } from 'redux-saga/effects';
 import api, { endpoint } from 'api';
 import cookie, { key as cookieKey } from 'store/cookie';
 import router from 'utils/router';
+import { showNotification } from 'components/Modal';
 import { actionType } from './reducer';
 import type { RegisterData, LoginData } from './model';
 
@@ -33,6 +34,7 @@ export function* login(action: { user: LoginData }): Generator<*, *, *> {
     router.push('account');
   } catch (error) {
     yield put({ type: actionType.LOGIN_RESPONSE_ERROR, error: error.response.data });
+    yield call(showNotification, 'Unknown error.');
   }
 }
 
@@ -46,6 +48,7 @@ export function* register(action: { user: RegisterData }): Generator<*, *, *> {
     } });
   } catch (error) {
     yield put({ type: actionType.REGISTER_RESPONSE_ERROR, error: error.response.data });
+    yield call(showNotification, 'Unknown error.');
   }
 }
 
@@ -62,8 +65,10 @@ export function* updateAccount(action: { user: Object }): Generator<*, *, *> {
   try {
     const response = yield call(api.post, endpoint.ACCOUNT, action.user);
     yield put({ type: actionType.UPDATE_ACCOUNT_SUCCESS, user: response.data });
+    yield call(showNotification, 'Account succesfully updated');
   } catch (error) {
     yield put({ type: actionType.UPDATE_ACCOUNT_ERROR, error: error.response.data });
+    yield call(showNotification, 'Invalid form');
   }
 }
 
@@ -76,8 +81,10 @@ export function* changePassword(
       oldPassword: action.oldPassword,
     });
     yield put({ type: actionType.CHANGE_PASSWORD_SUCCESS });
+    yield call(showNotification, 'Password changed successfully');
   } catch (error) {
     yield put({ type: actionType.CHANGE_PASSWORD_ERROR, error: error.response.data });
+    yield call(showNotification, 'Invalid form');
   }
 }
 
@@ -93,8 +100,10 @@ export function* googleLogin(action: { data: mixed }): Generator<*, *, *> {
 
     yield put({ type: actionType.GOOGLE_LOGIN_SUCCESS, token });
     router.push('account');
+    yield call(showNotification, 'login success');
   } catch (error) {
     yield put({ type: actionType.GOOGLE_LOGIN_ERROR, error: error.response.data });
+    yield call(showNotification, 'Unknown error.');
   }
 }
 
